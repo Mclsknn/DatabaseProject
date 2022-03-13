@@ -9,5 +9,6 @@ namespace DatabaseProject.Manager.Abstract
 {
     public interface IDeliveryDetailService : IGenericService<DeliveryDetail>
     {
+        ICollection<City> GetCitiesByDelivery(DeliveryDetail delivery);
     }
 }

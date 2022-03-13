@@ -5,6 +5,7 @@ using DatabaseProject.Manager.Abstract;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Linq.Expressions;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -49,7 +50,15 @@ namespace DatabaseProject.Manager.Concrete
             TyreDetail tyreDetail = EntityGenerator();
             switch (islem)
             {
-                case 1:  Add(tyreDetail); break;
+                case 1 : try
+                         {
+                           Add(tyreDetail);
+                           DisplayFunc.IsSuccess();
+                         }
+                         catch (Exception)
+                         {
+                           DisplayFunc.IsError();
+                         } break;
 
                 case 2:  DisplayEntityList(tyreDetails);
                          try
@@ -82,7 +91,7 @@ namespace DatabaseProject.Manager.Concrete
         public void DisplayEntityList(ICollection<TyreDetail> tyreDetails)
         {
             foreach (var item in tyreDetails)
-            Console.WriteLine(item.ID + "-" + item.TyreType + "-" + item.ExpirationDate);
+            Console.WriteLine("\n" + item.ID + " - " + item.TyreType + " - " + Convert.ToDateTime(item.ExpirationDate).ToString("dd-MM-yyyy"));
         }
 
         public TyreDetail EntityGenerator()

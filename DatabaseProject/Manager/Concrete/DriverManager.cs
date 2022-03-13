@@ -5,6 +5,7 @@ using DatabaseProject.Manager.Abstract;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Linq.Expressions;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -49,8 +50,16 @@ namespace DatabaseProject.Manager.Concrete
         
             switch (islem)
             {
-                case 1 : Add(driver); break;
-
+                case 1 : try
+                         {
+                            Add(driver);
+                            DisplayFunc.IsSuccess();
+                         }
+                         catch (Exception)
+                         {
+                            DisplayFunc.IsError();
+                         } break;
+                     
                 case 2 : DisplayEntityList(drivers);
                          try
                          {
@@ -82,7 +91,7 @@ namespace DatabaseProject.Manager.Concrete
         public void DisplayEntityList(ICollection<Driver> drivers)
         {
             foreach (var item in drivers)
-            Console.WriteLine(item.ID + "-" + item.DriverName + item.DriverLastName);
+            Console.WriteLine(item.ID + " - " + item.DriverName + " "+ item.DriverLastName);
         }
         public Driver EntityGenerator()
         {
@@ -92,6 +101,7 @@ namespace DatabaseProject.Manager.Concrete
             driver.DriverBirthDate = DateTime.Now;
             driver.IdentityNumber = "14593975121";
             return driver;
-        }     
+        }
+
     }
 }

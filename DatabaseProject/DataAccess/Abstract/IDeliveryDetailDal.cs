@@ -9,5 +9,6 @@ namespace DatabaseProject.DataAccess.Abstract
 {
     public interface IDeliveryDetailDal : IGenericRepository<DeliveryDetail>
     {
+        ICollection<City> GetCitiesByDelivery(DeliveryDetail delivery);
     }
 }

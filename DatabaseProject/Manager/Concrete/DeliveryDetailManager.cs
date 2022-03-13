@@ -7,6 +7,8 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using DatabaseProject.DisplayFunctions;
+using System.Linq.Expressions;
+
 namespace DatabaseProject.Manager.Concrete
 {
     public class DeliveryDetailManager : IDeliveryDetailService, IManager
@@ -48,7 +50,15 @@ namespace DatabaseProject.Manager.Concrete
 
             switch (islem)
             {
-                case 1 : Add(deliveryDetail); break;
+                case 1 : try
+                         {
+                            Add(deliveryDetail);
+                            DisplayFunc.IsSuccess();
+                         }
+                         catch (Exception)
+                         {
+                            DisplayFunc.IsError();
+                         } break;
 
                 case 2 : DisplayEntityList(deliveryDetails);
                          try
@@ -82,7 +92,10 @@ namespace DatabaseProject.Manager.Concrete
         public void DisplayEntityList(ICollection<DeliveryDetail> deliveryDetails)
         {
             foreach (var item in deliveryDetails)
-            { Console.WriteLine(item.DeliveryID); }
+            {
+                ICollection<City> cities = GetCitiesByDelivery(item);
+                Console.WriteLine("-> " +item.DeliveryID + " - " + "Çıkış Şehir : " +cities.ElementAt(0).CityName + " - "+ "Varış Şehir : " + cities.ElementAt(1).CityName); 
+            }
         }
 
         public DeliveryDetail EntityGenerator()
@@ -98,5 +111,9 @@ namespace DatabaseProject.Manager.Concrete
             return deliveryDetail;
         }
 
+        public ICollection<City> GetCitiesByDelivery(DeliveryDetail delivery)
+        {
+           return  _deliveryDetailDal.GetCitiesByDelivery(delivery);
+        }
     }
 }

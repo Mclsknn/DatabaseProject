@@ -7,6 +7,8 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using DatabaseProject.DisplayFunctions;
+using System.Linq.Expressions;
+
 namespace DatabaseProject.Manager.Concrete
 {
     public class CarDetailManager : ICarDetailService, IManager
@@ -48,7 +50,15 @@ namespace DatabaseProject.Manager.Concrete
             CarDetail carDetail = EntityGenerator();
             switch (islem)
             {
-                case 1 : Add(carDetail); break;
+                case 1 : try
+                         {
+                            Add(carDetail);
+                            DisplayFunc.IsSuccess();
+                         }
+                         catch (Exception)
+                         {
+                            DisplayFunc.IsError();
+                         } break;
 
                 case 2 : DisplayEntityList(carDetails);
                          try
@@ -81,7 +91,7 @@ namespace DatabaseProject.Manager.Concrete
         public void DisplayEntityList(ICollection<CarDetail> carDetails) 
         {
             foreach (var item in carDetails)
-            Console.WriteLine(item.ID + "-" + item.CarType + "-" + item.CarModel);
+            Console.WriteLine(item.ID + " - " + item.CarType + " - " + item.CarModel);
         }
 
         public CarDetail EntityGenerator() 
@@ -91,6 +101,7 @@ namespace DatabaseProject.Manager.Concrete
             carDetail.CarModel = 2016;
             return carDetail;
         }
+
 
     }
 }

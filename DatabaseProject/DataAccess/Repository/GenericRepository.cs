@@ -3,6 +3,7 @@ using DatabaseProject.Database;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Linq.Expressions;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -44,7 +45,11 @@ namespace DatabaseProject.DataAccess.Repository
             using var c = new Context();
             return c.Set<T>().Find(id);
         }
+        public T GetByExpression(Expression<Func<T, bool>> filter)
+        {
+            using var c = new Context();
+            return c.Set<T>().Where(filter).FirstOrDefault();
+        }
 
-     
     }
 }

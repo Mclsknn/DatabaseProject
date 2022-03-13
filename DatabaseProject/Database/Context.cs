@@ -14,8 +14,6 @@ namespace DatabaseProject.Database
         public DbSet<City> Cities { get; set; }
         public DbSet<Country> Countries { get; set; }
         public DbSet<DeliveryDetail> DeliveryDetails { get; set; }
-      //  public DbSet<DeliveryDetailsCities> DeliveryDetailsCities { get; set; }
-      //  public DbSet<DeliveryDetailsCountries> DeliveryDetailsCountries { get; set; }
         public DbSet<Driver> Drivers { get; set; }
         public DbSet<LoadDetail> LoadDetails { get; set; }
         public DbSet<TyreDetail> TyreDetails { get; set; }

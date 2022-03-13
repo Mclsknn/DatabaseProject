@@ -5,6 +5,7 @@ using DatabaseProject.Manager.Abstract;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Linq.Expressions;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -49,17 +50,25 @@ namespace DatabaseProject.Manager.Concrete
           
             switch (islem)
             {
-                case 1 : Add(loadDetail); break;
+                case 1 : try
+                         {
+                            Add(loadDetail);
+                            DisplayFunc.IsSuccess();
+                         }
+                         catch (Exception)
+                         {
+                            DisplayFunc.IsError();
+                         } break;
 
                 case 2 : DisplayEntityList(loadDetails);
                          try
                          {
-                             Delete(DisplayFunc.DisplayDelete());
-                             DisplayFunc.IsSuccess();
+                            Delete(DisplayFunc.DisplayDelete());
+                            DisplayFunc.IsSuccess();
                          }
                          catch (Exception)
                          {
-                             DisplayFunc.IsError();
+                            DisplayFunc.IsError();
                          } break;
 
                 case 3 : DisplayEntityList(loadDetails);
@@ -82,7 +91,7 @@ namespace DatabaseProject.Manager.Concrete
         public void DisplayEntityList(ICollection<LoadDetail> loadDetails)
         {
             foreach (var item in loadDetails)
-            Console.WriteLine(item.ID + "-" + item.LoadType);
+            Console.WriteLine(item.ID + " - " + item.LoadType);
         }
         public LoadDetail EntityGenerator()
         {
@@ -90,8 +99,9 @@ namespace DatabaseProject.Manager.Concrete
             loadDetail.LoadType = "Züccaciye";
             loadDetail.LoadDepth = 12.2m;
             loadDetail.LoadWidth = 17.55m;
-            loadDetail.DeliveryDetailID = 5;
+            loadDetail.DeliveryDetailID = 8;
             return loadDetail;
         }
+
     }
 }

@@ -1,10 +1,12 @@
 ﻿using DatabaseProject.DataAccess.Abstract;
 using DatabaseProject.DisplayFunctions;
+using DatabaseProject.Entity.Abstract;
 using DatabaseProject.Entity.Concrete;
 using DatabaseProject.Manager.Abstract;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Linq.Expressions;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -48,7 +50,15 @@ namespace DatabaseProject.Manager.Concrete
             Country country = EntityGenerator();
             switch (islem)
             {
-                case 1 : Add(country); break;
+                case 1 : try
+                         {
+                            Add(country);
+                            DisplayFunc.IsSuccess();
+                         }
+                         catch (Exception)
+                         {
+                            DisplayFunc.IsError();
+                         } break;
 
                 case 2 : DisplayEntityList(countries);
                          try
@@ -81,7 +91,7 @@ namespace DatabaseProject.Manager.Concrete
         public void DisplayEntityList(ICollection<Country> countries)
         {
             foreach (var item in countries)
-             Console.WriteLine(item.ID + "-" + item.CountryName);
+             Console.WriteLine(item.ID + " - " + item.CountryName);
         }
 
         public Country EntityGenerator()
@@ -90,6 +100,7 @@ namespace DatabaseProject.Manager.Concrete
             country.CountryName = "Türkiye";
             return country;
         }
+
 
     }
 }
